@@ -18,8 +18,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
+    overflow: "hidden"
   },
   gridList: {
     flexWrap: "nowrap",
@@ -28,7 +27,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.primary.main,
-    fontSize: "x-large"
+    fontSize: "x-large",
+    lineHeight: "normal"
   },
   item: {
     maxWidth: "150px",
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   titleBar: {
     background:
-      "linear-gradient(to top, rgb(53, 53, 53) 0%, rgb(201, 201, 201) 50%, rgba(53, 53, 53, 0.8) 100%)"
+      "linear-gradient(to top, rgba(53, 53, 53, 0.1) 0%, rgba(201, 201, 201, 0.8) 50%, rgba(83, 83, 83, 0.5) 100%)"
   }
 }));
 
