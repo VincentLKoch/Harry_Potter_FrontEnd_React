@@ -1,17 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 
+const AddingButton = selected =>
+  selected.isProfessor ? <button>button</button> : <React.Fragment />;
+
 const houseBanner = props => {
-  return <React.Fragment>{props.house.name}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {props.house.name}
+      {AddingButton(props.selected)}
+    </React.Fragment>
+  );
 };
 
 const mapStateToProps = (state, ownprops) => {
-  console.log("ownprops:\n", ownprops);
   return {
-    house: state.houses[ownprops.id]
+    house: state.houses[ownprops.id],
+    selected: state.wizards.selected
   };
 };
 
-const mapDispatchToProps = () => {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(houseBanner);
+export default connect(mapStateToProps)(houseBanner);

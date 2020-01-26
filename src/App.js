@@ -1,31 +1,48 @@
 import React from "react";
-import { connect } from "react-redux";
+import { makeStyles, Container, Box, Grid } from "@material-ui/core";
+
 import HouseBanner from "./Components/HouseBanner";
+import Waiting from "./Components/Waiting";
+import WizardList from "./Components/WizardList";
+
+const useStyles = makeStyles(theme => ({
+  app: {
+    textAlign: "center"
+  },
+  title: {
+    color: theme.palette.primary.main,
+    margin: "10px 0"
+  }
+}));
 
 const App = props => {
+  const classes = useStyles();
   return (
-    <div className="App">
-      a
-      <br />
-      <HouseBanner id={0} />
-      <br />
-      <HouseBanner id={1} />
-      <br />
-      <HouseBanner id={2} />
-      <br />
-      <HouseBanner id={3} />
-    </div>
+    <Container className={classes.app} maxWidth="lg">
+      <Waiting />
+      <Box>
+        <Grid container>
+          <Grid item xs={6} sm={3}>
+            <HouseBanner id={0} />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <HouseBanner id={1} />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <HouseBanner id={2} />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <HouseBanner id={3} />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box>
+        <WizardList isProfessor={true} />
+        <br /> a <br />
+        <WizardList isProfessor={false} />
+      </Box>
+    </Container>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    houses: state.houses
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
