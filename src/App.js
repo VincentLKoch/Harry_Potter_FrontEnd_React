@@ -18,30 +18,34 @@ const useStyles = makeStyles(theme => ({
 const App = props => {
   const classes = useStyles();
   return (
-    <Container className={classes.app} maxWidth="lg">
-      <Waiting />
-      <Box>
-        <Grid container>
-          <Grid item xs={6} sm={3}>
-            <HouseBanner id={0} />
+    <React.Fragment>
+      <Container className={classes.app} maxWidth="lg">
+        <Waiting />
+        <Box>
+          <Grid container>
+            <Grid item xs={12} sm={6} md={3}>
+              <HouseBanner id={0} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <HouseBanner id={1} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <HouseBanner id={2} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <HouseBanner id={3} />
+            </Grid>
           </Grid>
-          <Grid item xs={6} sm={3}>
-            <HouseBanner id={1} />
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <HouseBanner id={2} />
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <HouseBanner id={3} />
-          </Grid>
-        </Grid>
-      </Box>
-      <Box>
-        <WizardList isProfessor={true} />
-        <br /> a <br />
-        <WizardList isProfessor={false} />
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+      <Container className={classes.app} maxWidth="lg">
+        <Box>
+          <WizardList isProfessor={true} />
+          <br /> a <br />
+          <WizardList isProfessor={false} />
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 };
 

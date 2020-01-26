@@ -1,6 +1,6 @@
-import { WAITING, STOP_WAITING } from "../actions/waitAction";
-import { put, takeEvery, call } from "redux-saga/effects";
 import axios from "axios";
+import { put, takeEvery, call } from "redux-saga/effects";
+import { WAITING, STOP_WAITING } from "../actions/waitAction";
 
 function* getInitData() {
   yield put({ type: WAITING });
@@ -15,6 +15,10 @@ function* getInitData() {
       throw new Error(response);
     }
 
+    for (let ind = 0; ind < response.data.house.length; ind++) {
+      response.data.house[ind].inputValue = 0;
+    }
+
     yield put({ type: "INIT_ANSWER_HOUSE", payload: response.data.house });
     yield put({ type: "INIT_ANSWER_STUDENT", payload: response.data.student });
     yield put({
@@ -23,11 +27,6 @@ function* getInitData() {
     });
   } catch (error) {
     console.error("getInitData error:\n", error);
-    if (error.message) {
-      yield put({ type: "Error", payload: error.message });
-    } else {
-      yield put({ type: "Error", payload: error });
-    }
   }
 
   yield put({ type: STOP_WAITING });

@@ -100,7 +100,6 @@ const mapStateToProps = (state, ownprops) => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleSelect: (id, isProfessor) => {
-    console.log("toggleSelect:\n", id, isProfessor);
     return dispatch(selectWizardAction(id, isProfessor));
   }
 });
