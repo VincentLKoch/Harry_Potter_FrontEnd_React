@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const App = props => {
+const App = () => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -41,7 +41,6 @@ const App = props => {
       <Container className={classes.app} maxWidth="lg">
         <Box>
           <WizardList isProfessor={true} />
-          <br /> a <br />
           <WizardList isProfessor={false} />
         </Box>
       </Container>

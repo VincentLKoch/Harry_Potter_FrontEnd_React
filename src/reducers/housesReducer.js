@@ -35,13 +35,11 @@ export default (state = initialState, action) => {
     case "INIT_ANSWER_HOUSE":
       return { ...action.payload };
     case ADD_POINTS_RESULT:
-      const addNewState = state;
-      addNewState[action.houseID - 1].point = +action.payload;
-      return { ...state, ...addNewState };
+      state[action.houseID - 1].point = +action.payload;
+      return state;
     case UPDATE_INPUT_VALUE:
-      const inputValNewState = state;
-      inputValNewState[action.houseID].inputValue = +action.payload;
-      return { ...state, ...inputValNewState };
+      state[action.houseID].inputValue = +action.payload;
+      return { ...state };
     default:
       return state;
   }

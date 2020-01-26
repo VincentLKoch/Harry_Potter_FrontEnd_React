@@ -6,12 +6,18 @@ import {
   GridList,
   GridListTile,
   GridListTileBar,
-  IconButton
+  IconButton,
+  Button,
+  TextField,
+  ButtonGroup,
+  Container
 } from "@material-ui/core";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 
 import { selectWizardAction } from "../actions/selectWizardAction";
+import { addWizardAction } from "../actions/addWizardAction";
+import { removeWizardAction } from "../actions/removeWizardAction";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,8 +46,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getImageLink = genre =>
-  genre === "M" ? "./images/Male.png" : "./images/Female.png";
+const getImageLink = gender =>
+  gender === "M" ? "./images/Male.png" : "./images/Female.png";
 
 const getButton = (isSelected, classStyle) =>
   isSelected ? (
@@ -52,6 +58,34 @@ const getButton = (isSelected, classStyle) =>
 
 const WizardList = props => {
   const classes = useStyles();
+  const state = { fName: "", lName: "", gender: "M", houseID: undefined };
+
+  const houseForm = () => {
+    if (!props.isProfessor) {
+      return (
+        <ButtonGroup
+          variant="contained"
+          size="small"
+          aria-label="large contained secondary button group"
+        >
+          <Button onClick={() => (state.houseID = undefined)}>
+            Sorting Hat
+          </Button>
+          <Button color="secondary" onClick={() => (state.houseID = 1)}>
+            Gryffindor
+          </Button>
+          <Button color="primary" onClick={() => (state.houseID = 2)}>
+            Hufflepuff
+          </Button>
+          <Button onClick={() => (state.houseID = 3)}>Ravenclaw</Button>
+          <Button color="secondary" onClick={() => (state.houseID = 4)}>
+            Slytherin
+          </Button>
+        </ButtonGroup>
+      );
+    }
+    return <React.Fragment />;
+  };
 
   return (
     <div className={classes.root}>
@@ -86,6 +120,57 @@ const WizardList = props => {
           </GridListTile>
         ))}
       </GridList>
+      <Container>
+        <div style={{ margin: "10px" }}>
+          <ButtonGroup
+            variant="contained"
+            size="large"
+            aria-label="large contained secondary button group"
+          >
+            <Button onClick={() => (state.gender = "M")}>M</Button>
+            <Button onClick={() => (state.gender = "F")}>F</Button>
+          </ButtonGroup>
+
+          <TextField
+            id="First_Name"
+            label="First Name"
+            type="text"
+            InputLabelProps={{
+              shrink: true
+            }}
+            variant="outlined"
+            onChange={e => (state.fName = e.target.value)}
+          />
+          <TextField
+            id="Last_Name"
+            label="Last Name"
+            type="text"
+            InputLabelProps={{
+              shrink: true
+            }}
+            variant="outlined"
+            onChange={e => (state.lName = e.target.value)}
+          />
+          {houseForm()}
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => props.addingWizard(state, props.isProfessor)}
+          >
+            Add
+          </Button>
+        </div>
+      </Container>
+      <Container>
+        <Button
+          type="submit"
+          variant="contained"
+          onClick={() => props.removeWizard(props.selected)}
+        >
+          {" "}
+          Remove Selected Wizard
+        </Button>
+      </Container>
     </div>
   );
 };
@@ -101,6 +186,20 @@ const mapStateToProps = (state, ownprops) => ({
 const mapDispatchToProps = dispatch => ({
   toggleSelect: (id, isProfessor) => {
     return dispatch(selectWizardAction(id, isProfessor));
+  },
+  addingWizard: (state, isProf) => {
+    return dispatch(
+      addWizardAction(
+        state.fName,
+        state.lName,
+        state.gender,
+        state.houseID,
+        isProf
+      )
+    );
+  },
+  removeWizard: selected => {
+    return dispatch(removeWizardAction(selected.id, selected.isProfessor));
   }
 });
 
