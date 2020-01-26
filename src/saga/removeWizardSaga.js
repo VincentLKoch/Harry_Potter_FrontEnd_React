@@ -6,7 +6,7 @@ import {
   REMOVE_WIZARD_RESULT
 } from "../actions/removeWizardAction";
 
-function* removeWizardToAPI(action) {
+export function* removeWizardToAPI(action) {
   const { id, isProfessor } = action.payload;
 
   let response;

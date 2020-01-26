@@ -3,7 +3,7 @@ import { put, takeEvery, call } from "redux-saga/effects";
 import { WAITING, STOP_WAITING } from "../actions/waitAction";
 import { ADD_WIZARD, ADD_WIZARD_RESULT } from "../actions/addWizardAction";
 
-function* addWizardToAPI(action) {
+export function* addWizardToAPI(action) {
   const { fName, lName, gender, houseID, isProf } = action.payload;
 
   let response;

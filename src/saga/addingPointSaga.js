@@ -5,7 +5,7 @@ import { WAITING, STOP_WAITING } from "../actions/waitAction";
 //Add points :
 import { ADD_POINTS, ADD_POINTS_RESULT } from "../actions/addPointsAction";
 
-function* addPointToAPI(action) {
+export function* addPointToAPI(action) {
   const { nbPoints, professorID, houseID } = action.payload;
 
   let response;

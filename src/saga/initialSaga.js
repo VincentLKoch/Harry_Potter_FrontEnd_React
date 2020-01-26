@@ -2,7 +2,7 @@ import axios from "axios";
 import { put, takeEvery, call } from "redux-saga/effects";
 import { WAITING, STOP_WAITING } from "../actions/waitAction";
 
-function* getInitData() {
+export function* getInitData() {
   yield put({ type: WAITING });
   let response;
 
