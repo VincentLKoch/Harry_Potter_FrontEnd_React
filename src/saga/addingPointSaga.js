@@ -1,5 +1,5 @@
 import axios from "axios";
-import { put, takeEvery, call } from "redux-saga/effects";
+import { put, takeLatest, call } from "redux-saga/effects";
 import { WAITING, STOP_WAITING } from "../actions/waitAction";
 
 //Add points :
@@ -7,6 +7,14 @@ import { ADD_POINTS, ADD_POINTS_RESULT } from "../actions/addPointsAction";
 
 export function* addPointToAPI(action) {
   const { nbPoints, professorID, houseID } = action.payload;
+  if (
+    nbPoints === 0 ||
+    nbPoints === undefined ||
+    professorID === undefined ||
+    houseID === undefined
+  ) {
+    return;
+  }
 
   let response;
   yield put({ type: WAITING });
@@ -40,5 +48,5 @@ export function* addPointToAPI(action) {
 }
 
 export default function* watchAddPoints() {
-  yield takeEvery(ADD_POINTS, addPointToAPI);
+  yield takeLatest(ADD_POINTS, addPointToAPI);
 }

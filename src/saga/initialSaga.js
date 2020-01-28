@@ -1,5 +1,5 @@
 import axios from "axios";
-import { put, takeEvery, call } from "redux-saga/effects";
+import { put, takeLatest, call } from "redux-saga/effects";
 import { WAITING, STOP_WAITING } from "../actions/waitAction";
 
 export function* getInitData() {
@@ -33,5 +33,5 @@ export function* getInitData() {
 }
 
 export default function* watchInitCall() {
-  yield takeEvery("INIT_DATA", getInitData);
+  yield takeLatest("INIT_DATA", getInitData);
 }

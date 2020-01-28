@@ -325,7 +325,6 @@ Array [
             <span
               className="MuiButton-label"
             >
-               
               Remove Selected Wizard
             </span>
           </button>
@@ -694,7 +693,6 @@ Array [
             <span
               className="MuiButton-label"
             >
-               
               Remove Selected Wizard
             </span>
           </button>

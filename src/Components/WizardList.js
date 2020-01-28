@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import {
@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
-    width: "100%"
+    width: "100%",
+    height: "200px"
   },
   title: {
     color: theme.palette.primary.main,
@@ -59,7 +60,10 @@ const getButton = (isSelected, classStyle) =>
 
 const WizardList = props => {
   const classes = useStyles();
-  const state = { fName: "", lName: "", gender: "M", houseID: undefined };
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [gender, setGender] = useState("M");
+  const [houseID, setHouseID] = useState(undefined);
 
   const houseForm = () => {
     if (!props.isProfessor) {
@@ -69,17 +73,15 @@ const WizardList = props => {
           size="small"
           aria-label="large contained secondary button group"
         >
-          <Button onClick={() => (state.houseID = undefined)}>
-            Sorting Hat
-          </Button>
-          <Button color="secondary" onClick={() => (state.houseID = 1)}>
+          <Button onClick={() => setHouseID(undefined)}>Sorting Hat</Button>
+          <Button color="secondary" onClick={() => setHouseID(1)}>
             Gryffindor
           </Button>
-          <Button color="primary" onClick={() => (state.houseID = 2)}>
+          <Button color="primary" onClick={() => setHouseID(2)}>
             Hufflepuff
           </Button>
-          <Button onClick={() => (state.houseID = 3)}>Ravenclaw</Button>
-          <Button color="secondary" onClick={() => (state.houseID = 4)}>
+          <Button onClick={() => setHouseID(3)}>Ravenclaw</Button>
+          <Button color="secondary" onClick={() => setHouseID(4)}>
             Slytherin
           </Button>
         </ButtonGroup>
@@ -127,8 +129,8 @@ const WizardList = props => {
             size="large"
             aria-label="large contained secondary button group"
           >
-            <Button onClick={() => (state.gender = "M")}>M</Button>
-            <Button onClick={() => (state.gender = "F")}>F</Button>
+            <Button onClick={() => setGender("M")}>M</Button>
+            <Button onClick={() => setGender("F")}>F</Button>
           </ButtonGroup>
 
           <TextField
@@ -139,7 +141,8 @@ const WizardList = props => {
               shrink: true
             }}
             variant="outlined"
-            onChange={e => (state.fName = e.target.value)}
+            onChange={e => setFName(e.target.value)}
+            value={fName}
           />
           <TextField
             id="Last_Name"
@@ -149,13 +152,23 @@ const WizardList = props => {
               shrink: true
             }}
             variant="outlined"
-            onChange={e => (state.lName = e.target.value)}
+            onChange={e => setLName(e.target.value)}
+            value={lName}
           />
+
           {houseForm()}
           <Button
             variant="contained"
             type="submit"
-            onClick={() => props.addingWizard(state, props.isProfessor)}
+            onClick={() => {
+              props.addingWizard(
+                fName,
+                lName,
+                gender,
+                houseID,
+                props.isProfessor
+              );
+            }}
           >
             Add
           </Button>
@@ -165,9 +178,10 @@ const WizardList = props => {
         <Button
           type="submit"
           variant="contained"
-          onClick={() => props.removeWizard(props.selected)}
+          onClick={() => {
+            if (props.selected.id !== -1) props.removeWizard(props.selected);
+          }}
         >
-          {" "}
           Remove Selected Wizard
         </Button>
       </Container>
@@ -187,16 +201,8 @@ const mapDispatchToProps = dispatch => ({
   toggleSelect: (id, isProfessor) => {
     return dispatch(selectWizardAction(id, isProfessor));
   },
-  addingWizard: (state, isProf) => {
-    return dispatch(
-      addWizardAction(
-        state.fName,
-        state.lName,
-        state.gender,
-        state.houseID,
-        isProf
-      )
-    );
+  addingWizard: (fName, lName, gender, houseID, isProf) => {
+    return dispatch(addWizardAction(fName, lName, gender, houseID, isProf));
   },
   removeWizard: selected => {
     return dispatch(removeWizardAction(selected.id, selected.isProfessor));

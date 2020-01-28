@@ -149,7 +149,7 @@ describe("Testing Snapshoot:", () => {
       className: "MuiButton-label"
     });
     expect(removeButton.length).toBe(1);
-    expect(removeButton[0].children).toEqual([" ", "Remove Selected Wizard"]);
+    expect(removeButton[0].children).toEqual(["Remove Selected Wizard"]);
 
     //REMOVE_STUDENT
     inputs = forms[3].children;
@@ -158,6 +158,6 @@ describe("Testing Snapshoot:", () => {
       className: "MuiButton-label"
     });
     expect(removeButton.length).toBe(1);
-    expect(removeButton[0].children).toEqual([" ", "Remove Selected Wizard"]);
+    expect(removeButton[0].children).toEqual(["Remove Selected Wizard"]);
   });
 });

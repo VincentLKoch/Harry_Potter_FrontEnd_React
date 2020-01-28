@@ -1,10 +1,18 @@
 import axios from "axios";
-import { put, takeEvery, call } from "redux-saga/effects";
+import { put, takeLatest, call } from "redux-saga/effects";
 import { WAITING, STOP_WAITING } from "../actions/waitAction";
 import { ADD_WIZARD, ADD_WIZARD_RESULT } from "../actions/addWizardAction";
 
 export function* addWizardToAPI(action) {
   const { fName, lName, gender, houseID, isProf } = action.payload;
+  if (
+    fName === undefined ||
+    lName === undefined ||
+    (gender !== "M" && gender !== "F") ||
+    isProf === undefined
+  ) {
+    return;
+  }
 
   let response;
   yield put({ type: WAITING });
@@ -69,5 +77,5 @@ export function* addWizardToAPI(action) {
 }
 
 export default function* watchAddWizard() {
-  yield takeEvery(ADD_WIZARD, addWizardToAPI);
+  yield takeLatest(ADD_WIZARD, addWizardToAPI);
 }

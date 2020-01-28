@@ -1,5 +1,5 @@
 import axios from "axios";
-import { put, takeEvery, call } from "redux-saga/effects";
+import { put, takeLatest, call } from "redux-saga/effects";
 import { WAITING, STOP_WAITING } from "../actions/waitAction";
 import {
   REMOVE_WIZARD,
@@ -8,6 +8,9 @@ import {
 
 export function* removeWizardToAPI(action) {
   const { id, isProfessor } = action.payload;
+  if (id === undefined || isProfessor === undefined) {
+    return;
+  }
 
   let response;
   yield put({ type: WAITING });
@@ -38,5 +41,5 @@ export function* removeWizardToAPI(action) {
 }
 
 export default function* watchRemoveWizard() {
-  yield takeEvery(REMOVE_WIZARD, removeWizardToAPI);
+  yield takeLatest(REMOVE_WIZARD, removeWizardToAPI);
 }
