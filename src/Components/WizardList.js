@@ -29,7 +29,8 @@ const useStyles = makeStyles(theme => ({
   gridList: {
     flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)"
+    transform: "translateZ(0)",
+    width: "100%"
   },
   title: {
     color: theme.palette.primary.main,
@@ -86,7 +87,6 @@ const WizardList = props => {
     }
     return <React.Fragment />;
   };
-
   return (
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={2.5}>
@@ -177,8 +177,8 @@ const WizardList = props => {
 
 const mapStateToProps = (state, ownprops) => ({
   listOfWizards: ownprops.isProfessor
-    ? state.wizards.professors
-    : state.wizards.students,
+    ? [...state.wizards.professors]
+    : [...state.wizards.students],
   isProfessor: ownprops.isProfessor,
   selected: state.wizards.selected
 });
